@@ -1,5 +1,7 @@
 # 릴리스: 1.2.0 같은 태그를 올리면 (v1.2.0도 된다) APK를 빌드해서 GitHub Release에 붙인다.
 # 앱의 버전(설정 › 앱 정보)은 태그 이름에서 가져온다.
+# GitHub에서 릴리스를 먼저 만들어 두었으면 그 릴리스에 APK만 붙인다 (적어 둔 내용은 그대로).
+# 이미 있는 태그로 다시 돌리려면: Actions › Release › Run workflow 에서 태그 이름을 넣는다.
 #
 # 서명 (선택): 저장소 Settings › Secrets and variables › Actions 에 아래 4개를 넣으면 그 키로 서명한다.
 #   ANDROID_KEYSTORE_BASE64   키스토어 파일을 base64로 바꾼 값 (base64 -i my.keystore | pbcopy)
@@ -12,6 +14,11 @@ name: Release
 on:
   push:
     tags: ['*.*.*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'APK를 만들 태그 (예: 1.0.0)'
+        required: true
 
 permissions:
   contents: write
@@ -21,8 +28,12 @@ jobs:
     runs-on: ubuntu-latest
     env:
       KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      # 태그를 올려서 실행되면 그 태그, 손으로 실행하면 입력한 태그
+      TAG: ${{ inputs.tag || github.ref_name }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ inputs.tag || github.ref_name }}
 
       - uses: actions/setup-node@v4
         with:
@@ -40,7 +51,6 @@ jobs:
       - name: 태그로 앱 버전 정하기
         id: version
         run: |
-          TAG="${GITHUB_REF_NAME}"
           VERSION="${TAG#v}"
           if ! [[ "$VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
             echo "::error::태그는 1.2.3 모양이어야 해요 (지금: $TAG)"
@@ -85,12 +95,12 @@ jobs:
           "$APKSIGNER" verify --print-certs android/app/build/outputs/apk/release/app-release.apk | head -3
           rm "$RUNNER_TEMP/release.keystore"
 
-      - name: GitHub Release 만들기
+      - name: GitHub Release에 올리기
         env:
           GH_TOKEN: ${{ github.token }}
           SIGNED: ${{ env.KEYSTORE_BASE64 != '' }}
         run: |
-          APK="listnr-${GITHUB_REF_NAME}.apk"
+          APK="listnr-${TAG}.apk"
           cp android/app/build/outputs/apk/release/app-release.apk "$APK"
           if [ "$SIGNED" = "true" ]; then SIGN_NOTE="릴리스 키로 서명했어요."; else SIGN_NOTE="디버그 키로 서명했어요 (개인용)."; fi
           cat > notes.md <<EOF
@@ -98,7 +108,12 @@ jobs:
 
           > ntfy 호환 비공식 클라이언트이며 ntfy LLC와 관계없어요. 이 앱은 전부 AI(Claude Code)로 만들었어요.
           EOF
-          gh release create "$GITHUB_REF_NAME" "$APK" \
-            --title "리스너 ${GITHUB_REF_NAME}" \
-            --notes-file notes.md \
-            --generate-notes
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            # 직접 만든 릴리스가 있으면 APK만 붙인다 (같은 이름의 파일은 바꿔 끼운다)
+            gh release upload "$TAG" "$APK" --clobber
+          else
+            gh release create "$TAG" "$APK" \
+              --title "리스너 ${TAG}" \
+              --notes-file notes.md \
+              --generate-notes
+          fi
