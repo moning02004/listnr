@@ -29,6 +29,8 @@ function repoUrl(pkgDir) {
 const seen = new Map();
 for (const [path, info] of Object.entries(lock.packages)) {
   if (!path || info.dev || info.devOptional || info.link) continue;
+  // 운영체제별 빌드 도구(lightningcss-darwin-arm64 등)는 앱에 안 들어가고, PC마다 설치되는 게 달라서 뺀다
+  if (info.os || info.cpu) continue;
   const name = path.slice(path.lastIndexOf('node_modules/') + 'node_modules/'.length);
   const key = `${name}@${info.version}`;
   if (seen.has(key)) continue;

@@ -528,30 +528,6 @@
   "url": "https://github.com/expo/expo"
  },
  {
-  "name": "@expo/modules-macros-linux-arm64",
-  "version": "0.22.0",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@expo/modules-macros-linux-arm64"
- },
- {
-  "name": "@expo/modules-macros-linux-x64",
-  "version": "0.22.0",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@expo/modules-macros-linux-x64"
- },
- {
-  "name": "@expo/modules-macros-win32-arm64",
-  "version": "0.22.0",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@expo/modules-macros-win32-arm64"
- },
- {
-  "name": "@expo/modules-macros-win32-x64",
-  "version": "0.22.0",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@expo/modules-macros-win32-x64"
- },
- {
   "name": "@expo/osascript",
   "version": "2.8.1",
   "license": "MIT",
@@ -694,54 +670,6 @@
   "version": "2.3.1",
   "license": "MIT",
   "url": "https://github.com/jsamr/react-native-li/tree/master/packages/react-native-li#readme"
- },
- {
-  "name": "@noxcturnal/noxcturnal-darwin-arm64",
-  "version": "0.1.9",
-  "license": "MIT",
-  "url": "https://github.com/expo/noxcturnal"
- },
- {
-  "name": "@noxcturnal/noxcturnal-darwin-x64",
-  "version": "0.1.9",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@noxcturnal/noxcturnal-darwin-x64"
- },
- {
-  "name": "@noxcturnal/noxcturnal-linux-arm64-gnu",
-  "version": "0.1.9",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@noxcturnal/noxcturnal-linux-arm64-gnu"
- },
- {
-  "name": "@noxcturnal/noxcturnal-linux-arm64-musl",
-  "version": "0.1.9",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@noxcturnal/noxcturnal-linux-arm64-musl"
- },
- {
-  "name": "@noxcturnal/noxcturnal-linux-x64-gnu",
-  "version": "0.1.9",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@noxcturnal/noxcturnal-linux-x64-gnu"
- },
- {
-  "name": "@noxcturnal/noxcturnal-linux-x64-musl",
-  "version": "0.1.9",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@noxcturnal/noxcturnal-linux-x64-musl"
- },
- {
-  "name": "@noxcturnal/noxcturnal-win32-arm64-msvc",
-  "version": "0.1.9",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@noxcturnal/noxcturnal-win32-arm64-msvc"
- },
- {
-  "name": "@noxcturnal/noxcturnal-win32-x64-msvc",
-  "version": "0.1.9",
-  "license": "MIT",
-  "url": "https://www.npmjs.com/package/@noxcturnal/noxcturnal-win32-x64-msvc"
  },
  {
   "name": "@oxc-project/types",
@@ -2020,72 +1948,6 @@
   "version": "1.33.0",
   "license": "MPL-2.0",
   "url": "https://github.com/parcel-bundler/lightningcss"
- },
- {
-  "name": "lightningcss-android-arm64",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://www.npmjs.com/package/lightningcss-android-arm64"
- },
- {
-  "name": "lightningcss-darwin-arm64",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://github.com/parcel-bundler/lightningcss"
- },
- {
-  "name": "lightningcss-darwin-x64",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://www.npmjs.com/package/lightningcss-darwin-x64"
- },
- {
-  "name": "lightningcss-freebsd-x64",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://www.npmjs.com/package/lightningcss-freebsd-x64"
- },
- {
-  "name": "lightningcss-linux-arm-gnueabihf",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://www.npmjs.com/package/lightningcss-linux-arm-gnueabihf"
- },
- {
-  "name": "lightningcss-linux-arm64-gnu",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://www.npmjs.com/package/lightningcss-linux-arm64-gnu"
- },
- {
-  "name": "lightningcss-linux-arm64-musl",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://www.npmjs.com/package/lightningcss-linux-arm64-musl"
- },
- {
-  "name": "lightningcss-linux-x64-gnu",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://www.npmjs.com/package/lightningcss-linux-x64-gnu"
- },
- {
-  "name": "lightningcss-linux-x64-musl",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://www.npmjs.com/package/lightningcss-linux-x64-musl"
- },
- {
-  "name": "lightningcss-win32-arm64-msvc",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://www.npmjs.com/package/lightningcss-win32-arm64-msvc"
- },
- {
-  "name": "lightningcss-win32-x64-msvc",
-  "version": "1.33.0",
-  "license": "MPL-2.0",
-  "url": "https://www.npmjs.com/package/lightningcss-win32-x64-msvc"
  },
  {
   "name": "lodash.debounce",
