@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "Listnr",
+    "slug": "listnr",
+    "version": "1.0.0",
+    "scheme": "listnr",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#F4F5F7",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "dev.personal.listnr",
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      }
+    },
+    "android": {
+      "package": "dev.personal.listnr",
+      "adaptiveIcon": {
+        "backgroundColor": "#2F7D6D",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "softwareKeyboardLayoutMode": "resize",
+      "permissions": [
+        "android.permission.POST_NOTIFICATIONS"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "color": "#2F7D6D",
+          "icon": "./assets/notification-icon.png"
+        }
+      ],
+      "expo-status-bar",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#F4F5F7",
+          "imageWidth": 200
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": false
+    },
+    "locales": {
+      "ko": "./languages/ko.json",
+      "en": "./languages/en.json"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "리스너"
+  },
+  "android": {
+    "app_name": "리스너"
+  }
+}

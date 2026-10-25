@@ -1,0 +1,54 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+*.keystore
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+.kotlin/
+# 로컬 모듈의 빌드 결과물
+modules/*/android/build/
+.gradle/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# Expo가 만들어 내는 네이티브 폴더 (prebuild/EAS가 매번 새로 만든다)
+/android
+/ios
+
+# PyCharm
+.idea/
+
+# 개인 작업 파일 (앱과 관계없음)
+.claude/
+n8n_weather.txt
+F-rings/
+docs/

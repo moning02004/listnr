@@ -1,0 +1,45 @@
+{
+  "name": "listnr",
+  "version": "1.0.0",
+  "description": "Unofficial receive-only Android client for ntfy-compatible servers. Written entirely by AI (Claude Code).",
+  "author": "Yu Jeonghoon",
+  "license": "MIT",
+  "main": "expo-router/entry",
+  "dependencies": {
+    "@expo-google-fonts/nanum-gothic-coding": "^0.4.1",
+    "@expo-google-fonts/noto-sans-kr": "^0.4.4",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "expo": "^58.0.0",
+    "expo-clipboard": "~58.0.4",
+    "expo-constants": "~58.0.13",
+    "expo-font": "~58.0.10",
+    "expo-linking": "~58.0.14",
+    "expo-notifications": "~58.1.6",
+    "expo-router": "~58.0.26",
+    "expo-secure-store": "~58.0.2",
+    "expo-splash-screen": "~58.0.11",
+    "expo-status-bar": "~58.0.4",
+    "expo-system-ui": "~58.0.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-native": "0.88.0",
+    "react-native-marked": "^8.3.2",
+    "react-native-safe-area-context": "~5.10.1",
+    "react-native-screens": "~4.30.0",
+    "react-native-svg": "15.16.0",
+    "zustand": "^5.0.16"
+  },
+  "devDependencies": {
+    "@types/react": "~19.3.0",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~58.0.4",
+    "typescript": "~6.0.3"
+  },
+  "scripts": {
+    "start": "expo start",
+    "typecheck": "tsc --noEmit",
+    "build:apk": "npx eas-cli@latest build -p android --profile apk",
+    "lint": "expo lint"
+  },
+  "private": true
+}
