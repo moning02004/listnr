@@ -39,7 +39,8 @@
     "start": "expo start",
     "typecheck": "tsc --noEmit",
     "build:apk": "npx eas-cli@latest build -p android --profile apk",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "licenses": "node scripts/licenses.mjs"
   },
   "private": true
 }

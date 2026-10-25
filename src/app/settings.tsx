@@ -1,6 +1,7 @@
 // 설정 · 서버 관리 (시안: Settings.html)
 import { useEffect, useState, type ReactNode } from 'react';
-import { AppState, Pressable, ScrollView, View } from 'react-native';
+import { AppState, Linking, Pressable, ScrollView, View } from 'react-native';
+import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Constants from 'expo-constants';
 import { useTheme, ACCENTS, type AccentKey } from '@/theme';
@@ -17,6 +18,10 @@ import { Button, Card, Divider, SectionLabel, Segmented, Sheet, SheetRow, Status
 import { hostOf } from '@/utils/format';
 
 const pad = (h: number) => String(h).padStart(2, '0') + ':00';
+
+const REPO_URL = 'https://github.com/moning02004/listnr';
+// 릴리스 태그(v1.2.0)와 같은 모양으로 보여 준다. 버전은 빌드할 때 app.json에서 들어온다 (CI가 태그로 채운다)
+const APP_VERSION = 'v' + (Constants.expoConfig?.version ?? '0.0.0');
 
 export default function SettingsScreen() {
   const { c, accent, isDark } = useTheme();
@@ -223,9 +228,28 @@ export default function SettingsScreen() {
           </View>
         </View>
 
-        <T size={12} color={c.muted} style={{ textAlign: 'center', marginTop: 4 }}>
-          버전 {Constants.expoConfig?.version ?? '1.0.0'} · ntfy 호환
-        </T>
+        {/* 앱 정보 */}
+        <View>
+          <SectionLabel>앱 정보</SectionLabel>
+          <Card style={{ paddingHorizontal: 16 }}>
+            <Row title="버전" value={APP_VERSION} />
+            <Divider />
+            <Row title="소스 코드" sub="GitHub" onPress={() => Linking.openURL(REPO_URL)}>
+              <Icon name="chevronRight" size={18} color={c.faint} strokeWidth={2} />
+            </Row>
+            <Divider />
+            <Row title="라이선스" value="MIT" onPress={() => Linking.openURL(`${REPO_URL}/blob/main/LICENSE`)}>
+              <Icon name="chevronRight" size={18} color={c.faint} strokeWidth={2} />
+            </Row>
+            <Divider />
+            <Row title="오픈소스 라이선스" onPress={() => router.push('/licenses')}>
+              <Icon name="chevronRight" size={18} color={c.faint} strokeWidth={2} />
+            </Row>
+          </Card>
+          <T size={12} color={c.muted} style={{ textAlign: 'center', marginTop: 12, lineHeight: 18 }}>
+            {'ntfy 호환 비공식 클라이언트 · ntfy LLC와 관계없어요\nAI(Claude Code)로 만들었어요'}
+          </T>
+        </View>
       </ScrollView>
 
       {editing && <ServerEditor server={editing === 'new' ? null : editing} onClose={() => setEditing(null)} />}

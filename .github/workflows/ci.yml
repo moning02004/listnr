@@ -1,0 +1,35 @@
+# 코드 검사: main에 올리거나 PR을 열 때마다 타입 검사, 린트, 라이선스 목록 확인
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: 의존성 설치
+        run: npm ci
+
+      - name: 타입 검사
+        run: npx tsc --noEmit
+
+      - name: 린트
+        run: npx expo lint
+
+      - name: 오픈소스 라이선스 목록이 최신인지 확인
+        run: |
+          npm run licenses
+          git diff --exit-code src/generated/licenses.json || {
+            echo "::error::의존성이 바뀌었어요. 'npm run licenses'를 실행하고 결과를 커밋해 주세요."
+            exit 1
+          }

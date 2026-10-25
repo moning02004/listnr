@@ -68,6 +68,7 @@ export default function RootLayout() {
         <Stack.Screen name="message/[subId]/[id]" />
         <Stack.Screen name="subscribe" options={{ animation: 'slide_from_bottom' }} />
         <Stack.Screen name="settings" />
+        <Stack.Screen name="licenses" />
       </Stack>
     </>
   );

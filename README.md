@@ -42,9 +42,25 @@ npm start
 
 > Expo Go에서는 **앱을 켜 놓은 동안만** 알림을 받아요. 백그라운드 수신 모듈은 APK에만 들어가요.
 
+## 설치하기
+
+[Releases](https://github.com/moning02004/listnr/releases)에서 최신 `listnr-vX.Y.Z.apk`를 받아 설치하면 돼요.
+
 ## APK 만들기
 
-### 방법 1. EAS 클라우드 빌드 (Android Studio 필요 없음)
+### 방법 1. GitHub Actions (릴리스)
+
+`v1.2.0`처럼 버전 태그를 올리면 Actions가 APK를 빌드해서 Releases에 올려요. 앱의 **설정 › 앱 정보 › 버전**에는 태그 이름이 그대로 보여요.
+
+```
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+서명 키를 쓰려면 저장소의 Actions 시크릿을 설정해요. 자세한 내용은 `.github/workflows/release.yml` 맨 위에 있어요.
+시크릿이 없으면 디버그 키로 서명돼요.
+
+### 방법 2. EAS 클라우드 빌드 (Android Studio 필요 없음)
 
 ```
 npx eas-cli@latest login
@@ -53,7 +69,7 @@ npm run build:apk
 
 처음에는 프로젝트와 키스토어를 만들지 물어봐요. 끝나면 다운로드 링크가 나와요.
 
-### 방법 2. 내 PC에서 빌드 (Android SDK, JDK 17 필요)
+### 방법 3. 내 PC에서 빌드 (Android SDK, JDK 17 필요)
 
 ```
 npx expo prebuild --platform android
@@ -104,6 +120,8 @@ curl -H "Title: Backup done" -H "Click: https://example.com" -d "야간 백업 �
 | `modules/ntfy-listener/` | 백그라운드 알림 (Kotlin). APK에만 들어가요 |
 | `languages/` | 언어별 앱 이름 (한국어 "리스너", 영어 "Listnr") |
 | `assets/icon-source/` | 아이콘 원본 SVG |
+| `scripts/licenses.mjs` | 오픈소스 라이선스 목록(`src/generated/licenses.json`) 만들기. 의존성을 바꾸면 `npm run licenses` |
+| `.github/workflows/` | CI(타입 검사·린트) · 릴리스(APK 빌드) |
 
 ### 어떻게 동작하나요
 

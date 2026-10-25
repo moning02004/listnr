@@ -1,0 +1,104 @@
+# 릴리스: v1.2.0 같은 태그를 올리면 APK를 빌드해서 GitHub Release에 붙인다.
+# 앱의 버전(설정 › 앱 정보)은 태그 이름에서 가져온다.
+#
+# 서명 (선택): 저장소 Settings › Secrets and variables › Actions 에 아래 4개를 넣으면 그 키로 서명한다.
+#   ANDROID_KEYSTORE_BASE64   키스토어 파일을 base64로 바꾼 값 (base64 -i my.keystore | pbcopy)
+#   ANDROID_KEYSTORE_PASSWORD 키스토어 비밀번호
+#   ANDROID_KEY_ALIAS         키 별칭
+#   ANDROID_KEY_PASSWORD      키 비밀번호
+# 없으면 디버그 키로 서명된다 (개인용으로는 충분하지만, 서명이 다르면 기존 앱 위에 업데이트 설치가 안 된다).
+name: Release
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    env:
+      KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: 의존성 설치
+        run: npm ci
+
+      - name: 태그로 앱 버전 정하기
+        id: version
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+          if ! [[ "$VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+            echo "::error::태그는 v1.2.3 모양이어야 해요 (지금: $TAG)"
+            exit 1
+          fi
+          # 안드로이드는 정수 버전 코드가 커져야 업데이트로 인식한다: 1.2.3 → 10203
+          CODE=$(( BASH_REMATCH[1] * 10000 + BASH_REMATCH[2] * 100 + BASH_REMATCH[3] ))
+          node -e "
+            const fs = require('fs');
+            const app = JSON.parse(fs.readFileSync('app.json', 'utf8'));
+            app.expo.version = '$VERSION';
+            app.expo.android.versionCode = $CODE;
+            fs.writeFileSync('app.json', JSON.stringify(app, null, 2) + '\n');
+          "
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "앱 버전 $VERSION (버전 코드 $CODE)"
+
+      - name: 안드로이드 프로젝트 만들기
+        run: npx expo prebuild --platform android --no-install
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: APK 빌드
+        working-directory: android
+        run: ./gradlew assembleRelease --no-daemon
+
+      - name: 릴리스 키로 서명
+        if: env.KEYSTORE_BASE64 != ''
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+          APKSIGNER=$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)apksigner
+          "$APKSIGNER" sign \
+            --ks "$RUNNER_TEMP/release.keystore" \
+            --ks-pass env:KEYSTORE_PASSWORD \
+            --ks-key-alias "$KEY_ALIAS" \
+            --key-pass env:KEY_PASSWORD \
+            android/app/build/outputs/apk/release/app-release.apk
+          "$APKSIGNER" verify --print-certs android/app/build/outputs/apk/release/app-release.apk | head -3
+          rm "$RUNNER_TEMP/release.keystore"
+
+      - name: GitHub Release 만들기
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SIGNED: ${{ env.KEYSTORE_BASE64 != '' }}
+        run: |
+          APK="listnr-${GITHUB_REF_NAME}.apk"
+          cp android/app/build/outputs/apk/release/app-release.apk "$APK"
+          if [ "$SIGNED" = "true" ]; then SIGN_NOTE="릴리스 키로 서명했어요."; else SIGN_NOTE="디버그 키로 서명했어요 (개인용)."; fi
+          cat > notes.md <<EOF
+          안드로이드 APK: \`$APK\` · $SIGN_NOTE
+
+          > ntfy 호환 비공식 클라이언트이며 ntfy LLC와 관계없어요. 이 앱은 전부 AI(Claude Code)로 만들었어요.
+          EOF
+          gh release create "$GITHUB_REF_NAME" "$APK" \
+            --title "리스너 ${GITHUB_REF_NAME}" \
+            --notes-file notes.md \
+            --generate-notes
