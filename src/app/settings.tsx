@@ -142,7 +142,7 @@ export default function SettingsScreen() {
               value={settings.quiet.enabled ? `${pad(settings.quiet.start)} – ${pad(settings.quiet.end)}` : '꺼짐'}
             />
             <Divider />
-            <Row title="긴급 알림은 항상 받기" sub="방해 금지 중에도 우선순위 5는 울려요">
+            <Row title="긴급 알림은 항상 받기">
               <Toggle value={settings.urgentBypass} onChange={(v) => settings.set({ urgentBypass: v })} label="긴급 알림은 항상 받기" />
             </Row>
             <Divider />
@@ -156,7 +156,7 @@ export default function SettingsScreen() {
           <Card style={{ paddingHorizontal: 16 }}>
             {backgroundAvailable ? (
               <>
-                <Row title="앱이 꺼져 있어도 받기" sub="'즉시 전달'을 켠 토픽만 받아요">
+                <Row title="앱이 꺼져 있어도 받기">
                   <Toggle value={settings.background} onChange={(v) => settings.set({ background: v })} label="앱이 꺼져 있어도 받기" />
                 </Row>
                 {settings.background && (
@@ -164,7 +164,6 @@ export default function SettingsScreen() {
                     <Divider />
                     <Row
                       title="배터리 최적화 제외"
-                      sub={battery ? '알림이 끊기지 않아요 · 눌러서 바꿀 수 있어요' : '꺼 두면 휴대폰이 연결을 끊을 수 있어요'}
                       value={battery ? '완료' : undefined}
                       onPress={openBatterySettings}
                     >
@@ -178,7 +177,7 @@ export default function SettingsScreen() {
                 )}
               </>
             ) : (
-              <Row title="APK에서만 쓸 수 있어요" sub="Expo Go에서는 앱이 켜져 있을 때만 받아요. README의 'APK 만들기'를 참고하세요." />
+              <Row title="APK에서만 쓸 수 있어요" />
             )}
           </Card>
         </View>
@@ -246,9 +245,6 @@ export default function SettingsScreen() {
               <Icon name="chevronRight" size={18} color={c.faint} strokeWidth={2} />
             </Row>
           </Card>
-          <T size={12} color={c.muted} style={{ textAlign: 'center', marginTop: 12, lineHeight: 18 }}>
-            {'ntfy 호환 비공식 클라이언트 · ntfy LLC와 관계없어요\nAI(Claude Code)로 만들었어요'}
-          </T>
         </View>
       </ScrollView>
 
@@ -272,9 +268,6 @@ export default function SettingsScreen() {
             <Stepper value={settings.quiet.end} onChange={(v) => settings.set({ quiet: { ...settings.quiet, end: v } })} />
           </Row>
         </Card>
-        <T size={12} color={c.muted}>
-          이 시간에는 소리와 진동 없이 알림만 쌓여요. 백그라운드 수신(APK)에서 적용돼요.
-        </T>
       </Sheet>
 
       <Sheet visible={sheet === 'retention'} onClose={() => setSheet(null)} title="알림 보관 기간">

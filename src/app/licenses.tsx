@@ -31,10 +31,6 @@ export default function LicensesScreen() {
         contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 8, paddingBottom: insets.bottom + 24 }}
         ListHeaderComponent={
           <View style={{ gap: 12, marginBottom: 12 }}>
-            <T size={13} color={c.muted} style={{ lineHeight: 19, paddingHorizontal: 4 }}>
-              이 앱은 아래 오픈소스 소프트웨어 {ALL.length}개를 사용해요. 이름을 누르면 프로젝트 페이지와 라이선스 전문을 볼 수 있어요.
-              한글 글꼴(Noto Sans KR, 나눔고딕코딩)은 SIL Open Font License 1.1을 따라요.
-            </T>
             <View
               style={{
                 flexDirection: 'row',

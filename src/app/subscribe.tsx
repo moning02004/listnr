@@ -110,9 +110,6 @@ export default function SubscribeScreen() {
                 <Icon name="shuffle" color={c.ink} />
               </Pressable>
             </View>
-            <T size={12} color={c.muted}>
-              공용 서버에서는 추측하기 어려운 이름을 쓰는 게 안전해요.
-            </T>
           </View>
 
           {/* 서버 (인증은 서버에 저장된 것을 쓴다) */}
@@ -172,21 +169,13 @@ export default function SubscribeScreen() {
                 서버 추가
               </T>
             </Pressable>
-            <T size={12} color={c.muted}>
-              서버 주소와 인증은 설정 › 서버에서 바꿀 수 있어요.
-            </T>
           </View>
 
           {/* 즉시 전달 */}
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 4 }}>
-            <View style={{ flex: 1, gap: 2 }}>
-              <T size={15} weight="medium">
-                즉시 전달
-              </T>
-              <T size={12} color={c.muted}>
-                배터리를 조금 더 쓰지만 알림이 바로 와요
-              </T>
-            </View>
+            <T size={15} weight="medium" style={{ flex: 1 }}>
+              즉시 전달
+            </T>
             <Toggle value={instant} onChange={setInstant} label="즉시 전달" />
           </View>
         </ScrollView>

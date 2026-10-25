@@ -137,9 +137,6 @@ export default function TopicScreen() {
             <T size={16} weight="bold">
               아직 메시지가 없어요
             </T>
-            <T size={14} color={c.muted} style={{ textAlign: 'center', lineHeight: 21 }}>
-              새 메시지가 오면 여기에 쌓여요. 터미널에서 이렇게 보낼 수 있어요.{'\n'}{`curl -d "안녕" ${sub.server.replace(/\/+$/, '')}/${sub.topic}`}
-            </T>
           </View>
         }
       />
@@ -161,7 +158,6 @@ export default function TopicScreen() {
       <Sheet visible={renaming} onClose={() => setRenaming(false)} title="이름 바꾸기">
         <Field
           label="표시 이름"
-          hint={`이 앱에서만 바뀌어요. 비워 두면 토픽 이름(${sub.topic})으로 보여요.`}
           value={nameDraft}
           onChangeText={setNameDraft}
           placeholder={sub.topic}

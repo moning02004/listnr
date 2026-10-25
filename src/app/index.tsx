@@ -178,7 +178,7 @@ function TopicRow({ row, first, lastRow }: { row: Row; first: boolean; lastRow: 
 }
 
 function EmptyState() {
-  const { c, accentSoft, accent } = useTheme();
+  const { accentSoft, accent } = useTheme();
   return (
     <Card style={{ padding: 24, alignItems: 'center', gap: 10 }}>
       <View
@@ -188,9 +188,6 @@ function EmptyState() {
       </View>
       <T size={17} weight="bold">
         아직 구독한 토픽이 없어요
-      </T>
-      <T size={14} color={c.muted} style={{ textAlign: 'center', lineHeight: 21 }}>
-        {'아래 "구독 추가"를 눌러 ntfy.sh나\n내 서버의 토픽을 구독해 보세요.'}
       </T>
     </Card>
   );
