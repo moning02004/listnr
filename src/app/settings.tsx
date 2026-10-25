@@ -20,8 +20,8 @@ import { hostOf } from '@/utils/format';
 const pad = (h: number) => String(h).padStart(2, '0') + ':00';
 
 const REPO_URL = 'https://github.com/moning02004/listnr';
-// 릴리스 태그(v1.2.0)와 같은 모양으로 보여 준다. 버전은 빌드할 때 app.json에서 들어온다 (CI가 태그로 채운다)
-const APP_VERSION = 'v' + (Constants.expoConfig?.version ?? '0.0.0');
+// 릴리스 태그(1.2.0)와 같은 모양으로 보여 준다. 버전은 빌드할 때 app.json에서 들어온다 (CI가 태그로 채운다)
+const APP_VERSION = Constants.expoConfig?.version ?? '0.0.0';
 
 export default function SettingsScreen() {
   const { c, accent, isDark } = useTheme();

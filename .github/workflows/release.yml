@@ -1,4 +1,4 @@
-# 릴리스: v1.2.0 같은 태그를 올리면 APK를 빌드해서 GitHub Release에 붙인다.
+# 릴리스: 1.2.0 같은 태그를 올리면 (v1.2.0도 된다) APK를 빌드해서 GitHub Release에 붙인다.
 # 앱의 버전(설정 › 앱 정보)은 태그 이름에서 가져온다.
 #
 # 서명 (선택): 저장소 Settings › Secrets and variables › Actions 에 아래 4개를 넣으면 그 키로 서명한다.
@@ -11,7 +11,7 @@ name: Release
 
 on:
   push:
-    tags: ['v*.*.*']
+    tags: ['*.*.*']
 
 permissions:
   contents: write
@@ -43,7 +43,7 @@ jobs:
           TAG="${GITHUB_REF_NAME}"
           VERSION="${TAG#v}"
           if ! [[ "$VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
-            echo "::error::태그는 v1.2.3 모양이어야 해요 (지금: $TAG)"
+            echo "::error::태그는 1.2.3 모양이어야 해요 (지금: $TAG)"
             exit 1
           fi
           # 안드로이드는 정수 버전 코드가 커져야 업데이트로 인식한다: 1.2.3 → 10203

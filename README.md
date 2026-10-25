@@ -44,17 +44,17 @@ npm start
 
 ## 설치하기
 
-[Releases](https://github.com/moning02004/listnr/releases)에서 최신 `listnr-vX.Y.Z.apk`를 받아 설치하면 돼요.
+[Releases](https://github.com/moning02004/listnr/releases)에서 최신 `listnr-X.Y.Z.apk`를 받아 설치하면 돼요.
 
 ## APK 만들기
 
 ### 방법 1. GitHub Actions (릴리스)
 
-`v1.2.0`처럼 버전 태그를 올리면 Actions가 APK를 빌드해서 Releases에 올려요. 앱의 **설정 › 앱 정보 › 버전**에는 태그 이름이 그대로 보여요.
+`1.2.0`처럼 버전 태그를 올리면 Actions가 APK를 빌드해서 Releases에 올려요. 앱의 **설정 › 앱 정보 › 버전**에는 이 버전이 그대로 보여요.
 
 ```
-git tag v1.0.0
-git push origin v1.0.0
+git tag 1.0.0
+git push origin 1.0.0
 ```
 
 서명 키를 쓰려면 저장소의 Actions 시크릿을 설정해요. 자세한 내용은 `.github/workflows/release.yml` 맨 위에 있어요.
