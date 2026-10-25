@@ -10,6 +10,8 @@
 #   ANDROID_KEY_PASSWORD      키 비밀번호
 # 없으면 디버그 키로 서명된다 (개인용으로는 충분하지만, 서명이 다르면 기존 앱 위에 업데이트 설치가 안 된다).
 name: Release
+# Actions 목록에 커밋 메시지 대신 '릴리스 1.0.0'처럼 보이게 한다
+run-name: 릴리스 ${{ inputs.tag || github.ref_name }}
 
 on:
   push:
