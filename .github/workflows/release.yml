@@ -73,11 +73,16 @@ jobs:
       - name: 안드로이드 프로젝트 만들기
         run: npx expo prebuild --platform android --no-install
 
+      # Gradle 의존성·빌드 캐시. 기본값은 main 브랜치에서만 캐시를 저장하는데,
+      # 릴리스는 태그에서만 돌기 때문에 여기서도 저장하게 한다.
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false
 
       - name: APK 빌드
         working-directory: android
-        run: ./gradlew assembleRelease --no-daemon
+        # x86·x86_64는 PC 에뮬레이터용이라 빼고, 실제 휴대폰용 ARM 두 가지만 빌드한다 (네이티브 컴파일이 절반으로 준다)
+        run: ./gradlew assembleRelease --no-daemon --build-cache -PreactNativeArchitectures=armeabi-v7a,arm64-v8a
 
       - name: 릴리스 키로 서명
         if: env.KEYSTORE_BASE64 != ''
